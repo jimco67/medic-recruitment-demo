@@ -1,20 +1,25 @@
 package com.demo.medicrecruitment.job.domain;
 
 import lombok.Getter;
+import lombok.NonNull;
 
 import java.time.LocalDateTime;
 
 @Getter
 public final class JobOfferDomain {
     private final Long id;
+    @NonNull
     private final String title;
     private final String description;
+    @NonNull
     private final String location;
+    @NonNull
     private final String speciality;
     private final LocalDateTime createdAt;
+    @NonNull
     private final Long recruiterId;
 
-    private JobOfferDomain(Long id, String title, String description, String location, String speciality, Long recruiterId) {
+    private JobOfferDomain(Long id, @NonNull String title, String description, @NonNull String location, @NonNull String speciality, @NonNull Long recruiterId) {
         this.id = id;
         this.title = title;
         this.description = description;
