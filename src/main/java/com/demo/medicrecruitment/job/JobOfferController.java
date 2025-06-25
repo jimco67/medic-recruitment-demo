@@ -1,5 +1,6 @@
 package com.demo.medicrecruitment.job;
 
+import com.demo.medicrecruitment.event.CreateJobEventProducer;
 import com.demo.medicrecruitment.job.dto.JobOfferDTO;
 import com.demo.medicrecruitment.job.exception.JobOfferMissingInformationException;
 import com.demo.medicrecruitment.job.mapper.domain.JobOfferDomainMapper;
@@ -7,7 +8,6 @@ import com.demo.medicrecruitment.job.usecase.CreateJobOfferUseCase;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +21,7 @@ public class JobOfferController {
 
     private final CreateJobOfferUseCase createJobOfferUseCase;
     private final JobOfferDomainMapper jobOfferDomainMapper;
+    private final CreateJobEventProducer createJobEventProducer;
 
     /**
      * Creates a new job offer.
@@ -47,7 +48,7 @@ public class JobOfferController {
                 specialty,
                 recruiterId
         );
-        var jobOfferDomain = createJobOfferUseCase.handle(createJobOfferCommand);
+        var jobOfferDomain = createJobOfferUseCase.handle(createJobOfferCommand, createJobEventProducer);
         return status(HttpStatus.CREATED).body(jobOfferDomainMapper.toDTO(jobOfferDomain));
     }
 

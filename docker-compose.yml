@@ -1,13 +1,11 @@
-version: "3.8"
-
 services:
-  postgres:
+  db:
     image: postgres:15
     restart: always
     environment:
       POSTGRES_DB: medic-recruitment
-      POSTGRES_USER: medic-recruitment
-      POSTGRES_PASSWORD: medic-recruitment
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     ports:
       - "5432:5432"
     volumes:
@@ -26,7 +24,7 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     depends_on:
       - zookeeper
@@ -39,7 +37,18 @@ services:
     ports:
       - "8081:80"
     depends_on:
-      - postgres
+      - db
+
+  app:
+    image: medic-recruitment:latest # ou medic-recruitment:0.0.1-SNAPSHOT si tu utilises build-image
+    container_name: medic-recruitment
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - db
+      - kafka
 
 volumes:
   pgdata:

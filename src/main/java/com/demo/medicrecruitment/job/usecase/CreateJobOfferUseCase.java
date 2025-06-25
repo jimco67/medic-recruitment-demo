@@ -1,8 +1,11 @@
 package com.demo.medicrecruitment.job.usecase;
 
+import com.demo.medicrecruitment.event.CreateJobEvent;
+import com.demo.medicrecruitment.event.CreateJobEventProducer;
 import com.demo.medicrecruitment.job.domain.JobOfferDomain;
 import com.demo.medicrecruitment.job.exception.JobOfferMissingInformationException;
 import com.demo.medicrecruitment.job.infrastructure.JobOfferDomainRepository;
+import com.demo.medicrecruitment.model.JobOffer;
 import io.micrometer.common.util.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +20,11 @@ public class CreateJobOfferUseCase {
     /**
      * Handles the creation of a new job offer.
      *
-     * @param createJobOfferCommand the command containing job offer details
+     * @param createJobOfferCommand  the command containing job offer details
+     * @param createJobEventProducer
      * @return the created JobOfferDomain object
      */
-    public JobOfferDomain handle(CreateJobOfferCommand createJobOfferCommand) throws JobOfferMissingInformationException {
+    public JobOfferDomain handle(CreateJobOfferCommand createJobOfferCommand, CreateJobEventProducer createJobEventProducer) throws JobOfferMissingInformationException {
         if (isNotValid(createJobOfferCommand)) {
             throw new JobOfferMissingInformationException();
         }
@@ -32,7 +36,8 @@ public class CreateJobOfferUseCase {
                 .withRecruiterId(createJobOfferCommand.recruiterId())
                 .build();
 
-        repository.save(jobOfferDomain);
+        JobOffer jobOffer = repository.save(jobOfferDomain);
+        createJobEventProducer.sendOrderEvent(new CreateJobEvent(jobOffer.getId(), jobOffer.getTitle()));
         return jobOfferDomain;
     }
 

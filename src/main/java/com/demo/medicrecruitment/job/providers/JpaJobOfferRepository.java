@@ -21,9 +21,9 @@ class JpaJobOfferRepository implements JobOfferDomainRepository {
     }
 
     @Override
-    public void save(JobOfferDomain jobOfferDomain) {
+    public JobOffer save(JobOfferDomain jobOfferDomain) {
         JobOffer jobOffer = jobOfferDomainMapper.fromDomain(jobOfferDomain);
         jobOffer.setCreationDatetime(LocalDateTime.now());
-        jobOfferRepository.save(jobOffer);
+        return jobOfferRepository.save(jobOffer);
     }
 }
