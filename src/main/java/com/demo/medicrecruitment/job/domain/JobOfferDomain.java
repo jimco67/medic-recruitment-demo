@@ -19,7 +19,8 @@ public final class JobOfferDomain {
     @NonNull
     private final Long recruiterId;
 
-    private JobOfferDomain(Long id, @NonNull String title, String description, @NonNull String location, @NonNull String speciality, @NonNull Long recruiterId) {
+    private JobOfferDomain(Long id, @NonNull String title, String description, @NonNull String location,
+                           @NonNull String speciality, @NonNull Long recruiterId) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -42,7 +43,8 @@ public final class JobOfferDomain {
         private LocalDateTime createdAt;
         private Long recruiterId;
 
-        public JobOfferBuilder() {}
+        public JobOfferBuilder() {
+        }
 
         public JobOfferBuilder(JobOfferDomain jobOfferDomain) {
             this.id = jobOfferDomain.getId();

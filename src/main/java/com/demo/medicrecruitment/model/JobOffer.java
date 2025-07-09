@@ -1,8 +1,6 @@
 package com.demo.medicrecruitment.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Access;
-import jakarta.persistence.AccessType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,7 +28,6 @@ public class JobOffer {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
-    @Access(AccessType.PROPERTY)
     private Long id;
 
     @Schema(description = "Title of the job offer")

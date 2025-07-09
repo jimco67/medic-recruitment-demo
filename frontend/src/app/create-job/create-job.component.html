@@ -1,0 +1,32 @@
+<button (click)="openCloseForm()">{{ buttonText }}</button>
+
+<div *ngIf="showForm" class="popup">
+  <form (ngSubmit)="submitForm()" #annonceForm="ngForm">
+    <label>Titre :</label>
+    <input type="text" name="title" [(ngModel)]="form.title" required />
+
+    <label>Description:</label>
+    <textarea name="description" [(ngModel)]="form.description" required></textarea>
+
+    <label>Ville :</label>
+    <input
+      type="text"
+      name="location"
+      [(ngModel)]="form.location"
+      (input)="onLocationInput($event)"
+      autocomplete="off"
+    />
+
+    <ul *ngIf="suggestions.length > 0" class="suggestions">
+      <li *ngFor="let ville of suggestions" (click)="selectSuggestion(ville)">
+        {{ ville }}
+      </li>
+    </ul>
+
+
+    <label for="specialty">Spécialité :</label>
+    <input type="text" id="specialty" name="speciality" [(ngModel)]="form.specialty" required />
+
+    <button type="submit">Valider</button>
+  </form>
+</div>

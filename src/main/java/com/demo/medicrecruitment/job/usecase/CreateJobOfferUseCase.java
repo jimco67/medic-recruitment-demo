@@ -21,7 +21,7 @@ public class CreateJobOfferUseCase {
      * Handles the creation of a new job offer.
      *
      * @param createJobOfferCommand  the command containing job offer details
-     * @param createJobEventProducer
+     * @param createJobEventProducer the event producer
      * @return the created JobOfferDomain object
      */
     public JobOfferDomain handle(CreateJobOfferCommand createJobOfferCommand, CreateJobEventProducer createJobEventProducer) throws JobOfferMissingInformationException {
@@ -41,11 +41,26 @@ public class CreateJobOfferUseCase {
         return jobOfferDomain;
     }
 
+    /**
+     * This method checks if the given CreateJobOfferCommand is not valid.
+     * A CreateJobOfferCommand is considered invalid if any of the following conditions are met:
+     * <ul>
+     *     <li>The title is empty or null</li>
+     *     <li>The location is empty or null</li>
+     *     <li>The speciality is empty or null</li>
+     *     <li>The recruiterId is null</li>
+     * </ul>
+     *
+     * @param createJobOfferCommand the command object to be validated
+     * @return true if the CreateJobOfferCommand is not valid, false otherwise
+     */
     private static boolean isNotValid(CreateJobOfferCommand createJobOfferCommand) {
         return StringUtils.isEmpty(createJobOfferCommand.title()) ||
-                StringUtils.isEmpty(createJobOfferCommand.location())|| StringUtils.isEmpty(createJobOfferCommand.speciality()) ||
+                StringUtils.isEmpty(createJobOfferCommand.location()) ||
+                StringUtils.isEmpty(createJobOfferCommand.speciality()) ||
                 createJobOfferCommand.recruiterId() == null;
     }
+
 
     public record CreateJobOfferCommand(
             String title,
