@@ -1,32 +1,32 @@
-<button (click)="openCloseForm()">{{ buttonText }}</button>
+<button mat-raised-button color="primary" class="open-close-button" (click)="openCloseForm()">{{ buttonText }}</button>
 
 <div *ngIf="showForm" class="popup">
-  <form (ngSubmit)="submitForm()" #annonceForm="ngForm">
-    <label>Titre :</label>
-    <input type="text" name="title" [(ngModel)]="form.title" required />
+  <form [formGroup]="jobForm" (ngSubmit)="submitForm()" class="job-form">
+    <mat-form-field appearance="fill">
+      <mat-label>Titre</mat-label>
+      <input matInput formControlName="title" required>
+    </mat-form-field>
 
-    <label>Description:</label>
-    <textarea name="description" [(ngModel)]="form.description" required></textarea>
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" required></textarea>
+    </mat-form-field>
 
-    <label>Ville :</label>
-    <input
-      type="text"
-      name="location"
-      [(ngModel)]="form.location"
-      (input)="onLocationInput($event)"
-      autocomplete="off"
-    />
+    <mat-form-field appearance="fill">
+      <mat-label>Ville</mat-label>
+      <input matInput formControlName="location" [matAutocomplete]="auto" required>
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let city of citySuggestions$ | async" [value]="city">
+          {{ city }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
 
-    <ul *ngIf="suggestions.length > 0" class="suggestions">
-      <li *ngFor="let ville of suggestions" (click)="selectSuggestion(ville)">
-        {{ ville }}
-      </li>
-    </ul>
+    <mat-form-field appearance="fill">
+      <mat-label>Spécialité</mat-label>
+      <input matInput formControlName="speciality" required>
+    </mat-form-field>
 
-
-    <label for="specialty">Spécialité :</label>
-    <input type="text" id="specialty" name="speciality" [(ngModel)]="form.specialty" required />
-
-    <button type="submit">Valider</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="jobForm.invalid">Valider</button>
   </form>
 </div>

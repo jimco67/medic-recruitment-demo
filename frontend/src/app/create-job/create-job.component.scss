@@ -1,113 +1,67 @@
-// Variables de style
-$primary-color: #3498db;
-$secondary-color: #2ecc71;
-$background-color: #f5f5f5;
-$text-color: #333;
-$border-radius: 0.3rem;
-
-// Styles globaux pour le formulaire et les éléments associés
-body {
-  background-color: $background-color;
-  font-family: 'Arial', sans-serif;
-  color: $text-color;
+:host {
+  display: block;
+  padding: 20px;
 }
 
-button, input[type="submit"] {
-  border: none;
-  padding: 10px 20px;
-  margin: 5px 0;
-  border-radius: $border-radius;
-  cursor: pointer;
-  font-size: 16px;
+.open-close-button {
+  margin-bottom: 20px;
 }
 
-// Bouton pour ouvrir/fermer le formulaire
-button.open-close-button {
-  background-color: $primary-color;
-  color: white;
-  border: none; /* Supprime la bordure par défaut */
-  border-radius: 8px; /* Ajoute des coins arrondis */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ajoute une ombre */
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-
-  &:hover {
-    background-image: linear-gradient(45deg, darken($primary-color, 10%), lighten($primary-color, 10%)); /* Dégradé moderne */
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Ombre plus prononcée lors du hover */
-  }
-}
-
-// Conteneur du formulaire popup
 .popup {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: white;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: $border-radius;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(33, 41, 54, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
-// Formulaire
-form {
+.job-form {
+  background: #ffffff;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 550px;
   display: flex;
   flex-direction: column;
+  gap: 0.5rem; 
+  animation: slideInUp 0.4s ease-out;
+}
 
-  label {
-    margin-bottom: 5px;
-  }
+mat-form-field {
+  width: 100%;
+}
 
-  input,
-  textarea {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: $border-radius;
-    margin-bottom: 10px;
-    font-size: 16px;
+button[type="submit"] {
+  margin-top: 1rem;
+  align-self: flex-end;
+}
 
-    &:focus {
-      outline: none;
-      border-color: $primary-color;
-    }
-  }
-
-.suggestions {
-  list-style-type: none;
-  padding-left: 0;
-  margin: 0;
-  max-height: 200px; /* Limite la hauteur des suggestions */
-  overflow-y: auto; /* Ajoute une barre de défilement si nécessaire */
-  border: 1px solid #ccc; /* Ajoute une bordure pour mieux définir le champ de suggestions */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Ajoute une ombre pour un effet moderne */
-
-  li {
-    background: white;
-    padding: 12px; /* Augmente le padding pour plus d'espace */
-    cursor: pointer;
-    border-bottom: 1px solid #ccc;
-
-    &:hover {
-      background-color: $background-color; /* Utilise la variable de couleur de fond */
-      color: white; /* Change la couleur du texte pour qu'il soit visible sur le fond */
-    }
-  }
-
-  // Ajoute une bordure pour le dernier élément
-  li:last-child {
-    border-bottom: none;
+@media (max-width: 600px) {
+  .job-form {
+    padding: 1.5rem;
+    width: 95%;
   }
 }
 
-  button[type="submit"] {
-    background-color: $secondary-color;
-    color: white;
-    transition: background-color 0.3s ease;
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
-    &:hover {
-      background-color: darken($secondary-color, 10%);
-    }
+@keyframes slideInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
 }

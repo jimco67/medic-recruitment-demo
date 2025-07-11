@@ -8,6 +8,7 @@ import com.demo.medicrecruitment.repository.JobOfferRepository;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Component
 class JpaJobOfferRepository implements JobOfferDomainRepository {
@@ -25,5 +26,10 @@ class JpaJobOfferRepository implements JobOfferDomainRepository {
         JobOffer jobOffer = jobOfferDomainMapper.fromDomain(jobOfferDomain);
         jobOffer.setCreationDatetime(LocalDateTime.now());
         return jobOfferRepository.save(jobOffer);
+    }
+
+    @Override
+    public List<JobOffer> getAll() {
+        return jobOfferRepository.findAll();
     }
 }
