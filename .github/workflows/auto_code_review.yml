@@ -17,6 +17,8 @@ jobs:
 
       - name: Lancer la revue de code par Gemini
         run: |
+          npm install -g @google/gemini-cli
+          export GEMINI_API_KEY="AIzaSyDHnaflL4tU4Z9Tc2EpIniMouK1mtK3gkc"
           gemini --prompt "En tant que lead developer, fais une revue de code stricte et détaillée pour la pull request #${{ github.event.pull_request.number }}. Compare les changements avec le code existant, sois strict sur la non-utilisation de données inutiles et les erreurs.
           Analyse la logique du développement et rejette tout ce qui est inutile ou ne respecte pas les conventions du projet. Finalement, poste tes conclusions en commentaire de la PR."
         env:
