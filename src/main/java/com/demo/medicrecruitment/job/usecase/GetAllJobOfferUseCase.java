@@ -1,6 +1,5 @@
 package com.demo.medicrecruitment.job.usecase;
 
-import com.demo.medicrecruitment.job.domain.JobOfferDomain;
 import com.demo.medicrecruitment.job.infrastructure.JobOfferDomainRepository;
 import com.demo.medicrecruitment.model.JobOffer;
 import org.springframework.stereotype.Service;
@@ -16,6 +15,10 @@ public class GetAllJobOfferUseCase {
         this.repository = repository;
     }
 
+    /**
+     *
+     * @return list of all jobs
+     */
     public List<JobOffer> handle() {
         return repository.getAll();
     }
