@@ -1,0 +1,14 @@
+{
+  "selectedAuthType": "gemini-api-key",
+  "theme": "GitHub",
+  "preferredEditor": "vscode",
+  "mcpServers": {
+    "github": {
+      "httpUrl": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "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"
+      },
+      "timeout": 5000
+    }
+  }
+}
