@@ -3,7 +3,6 @@ package com.demo.medicrecruitment.job;
 import com.demo.medicrecruitment.event.CreateJobEventProducer;
 import com.demo.medicrecruitment.job.dto.JobOfferDTO;
 import com.demo.medicrecruitment.job.exception.JobOfferMissingInformationException;
-import com.demo.medicrecruitment.job.mapper.domain.JobOfferDomainMapper;
 import com.demo.medicrecruitment.job.mapper.domain.JobOfferMapper;
 import com.demo.medicrecruitment.job.usecase.CreateJobOfferUseCase;
 import com.demo.medicrecruitment.job.usecase.GetAllJobOfferUseCase;
@@ -25,7 +24,6 @@ public class JobOfferController {
 
     private final CreateJobOfferUseCase createJobOfferUseCase;
     private final GetAllJobOfferUseCase getAllJobOfferUseCase;
-    private final JobOfferDomainMapper jobOfferDomainMapper;
     private final JobOfferMapper jobOfferMapper;
     private final CreateJobEventProducer createJobEventProducer;
 
@@ -55,7 +53,7 @@ public class JobOfferController {
                 recruiterId
         );
         var jobOfferDomain = createJobOfferUseCase.handle(createJobOfferCommand, createJobEventProducer);
-        return status(HttpStatus.CREATED).body(jobOfferDomainMapper.toDTO(jobOfferDomain));
+        return status(HttpStatus.CREATED).body(jobOfferMapper.toDTO(jobOfferDomain));
     }
 
 
