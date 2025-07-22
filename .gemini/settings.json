@@ -6,7 +6,7 @@
     "github": {
       "httpUrl": "https://api.githubcopilot.com/mcp/",
       "headers": {
-        "Authorization": "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"
+        "Authorization": "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"
       },
       "timeout": 5000
     }
