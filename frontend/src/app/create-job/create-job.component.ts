@@ -78,7 +78,8 @@ export class CreateJobComponent implements OnInit {
   private fetchCities(query: string): Observable<string[]> {
     return this.http.get<any[]>(`https://geo.api.gouv.fr/communes?nom=${query}&fields=nom&boost=population&limit=5`)
       .pipe(
-        map(data => data.map(ville => ville.nom))
+        map(data => data.map(ville => ville.nom.toUpperCase()))
       );
   }
+
 }
