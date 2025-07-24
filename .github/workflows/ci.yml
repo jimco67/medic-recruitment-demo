@@ -54,4 +54,4 @@ jobs:
         env:
           TESTCONTAINERS_RYUK_DISABLED: "true" # Optionnel, accélère parfois les builds CI
           DOCKER_HOST: "unix:///var/run/docker.sock" # S'assure que Testcontainers trouve Docker
-        run: ./mvnw -B test
+        run: ./mvnw -B clean verify -e
