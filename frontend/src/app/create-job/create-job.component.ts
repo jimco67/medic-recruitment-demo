@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+// Pour l'implémentation EventEmitter, décommentez les lignes suivantes :
+// import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { JobOfferService } from '../service/job-offer.service';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -9,6 +11,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Observable, of } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
+import { EventBusService } from '../service/event-bus.service';
+import { EventData } from '../service/event.class';
+import { JobOffer } from '../service/job-offer.model';
 
 @Component({
   selector: 'app-create-job',
@@ -25,6 +30,9 @@ import { map, startWith, switchMap } from 'rxjs/operators';
   ]
 })
 export class CreateJobComponent implements OnInit {
+  // Pour l'implémentation EventEmitter, décommentez la ligne suivante :
+  // @Output() jobCreated = new EventEmitter<JobOffer>();
+
   showForm: boolean = false;
   buttonText: string = "Créer une annonce";
   jobForm: FormGroup;
@@ -33,7 +41,8 @@ export class CreateJobComponent implements OnInit {
   constructor(
     private readonly http: HttpClient,
     private jobOfferService: JobOfferService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private eventBusService: EventBusService // Pour EventEmitter, supprimez 'private eventBusService: EventBusService'
   ) {
     this.jobForm = this.fb.group({
       title: ['', Validators.required],
@@ -64,8 +73,14 @@ export class CreateJobComponent implements OnInit {
       console.log('Annonce créée :', jobData);
 
       this.jobOfferService.createJobOffer(jobData).subscribe({
-        next: response => {
+        next: (response: JobOffer) => {
           console.log('Succès de la création du job:', response);
+          // Ligne pour l'Event Bus (actuelle)
+          this.eventBusService.emit(new EventData('jobCreated', response));
+
+          // Pour l'implémentation EventEmitter, commentez la ligne ci-dessus et décommentez la suivante :
+          // this.jobCreated.emit(response);
+
           this.openCloseForm();
         },
         error: err => {

@@ -1,0 +1,48 @@
+# Nom du workflow qui apparaîtra dans l'onglet "Actions" de GitHub
+name: Spring Boot CI
+
+# Déclenche le workflow à chaque push sur n'importe quelle branche
+on:
+  push:
+    branches: [ "**" ]
+  pull_request:
+    branches: [ "main", "master", "develop" ]
+
+jobs:
+  # Nom du job
+  build-and-test:
+    # Utilise la dernière version d'Ubuntu comme environnement d'exécution
+    runs-on: ubuntu-latest
+
+    steps:
+      # Étape 1: Récupère le code source de votre dépôt
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Étape 2: Configure l'environnement Java (JDK)
+      # La version 17 est requise par votre projet (spécifiée dans pom.xml)
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin' # Distribution Temurin (anciennement AdoptOpenJDK), un standard fiable
+
+      # Étape 3: Met en cache les dépendances Maven
+      # Cela accélère les builds en réutilisant les dépendances téléchargées
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      # Étape 4: Rend le Maven Wrapper exécutable
+      - name: Make Maven Wrapper executable
+        run: chmod +x ./mvnw
+
+      # Étape 5: Lance les tests avec Maven
+      # Utilise le wrapper pour assurer la cohérence de la version de Maven
+      # Le flag -B (batch mode) est recommandé pour les environnements de CI
+      - name: Run tests with Maven
+        run: ./mvnw -B test
