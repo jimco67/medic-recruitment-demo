@@ -41,8 +41,17 @@ jobs:
       - name: Make Maven Wrapper executable
         run: chmod +x ./mvnw
 
-      # Étape 5: Lance les tests avec Maven
-      # Utilise le wrapper pour assurer la cohérence de la version de Maven
-      # Le flag -B (batch mode) est recommandé pour les environnements de CI
-      - name: Run tests with Maven
+      # Vérifier que Docker fonctionne (optionnel mais recommandé pour debug)
+      - name: Check Docker version
+        run: docker version
+
+      # (Optionnel) Afficher les images Docker pour debug
+      - name: List Docker images
+        run: docker images
+
+      # Lancer les tests (unitaires + Cucumber + Testcontainers)
+      - name: Run tests with Maven (Cucumber & Testcontainers)
+        env:
+          TESTCONTAINERS_RYUK_DISABLED: "true" # Optionnel, accélère parfois les builds CI
+          DOCKER_HOST: "unix:///var/run/docker.sock" # S'assure que Testcontainers trouve Docker
         run: ./mvnw -B test
