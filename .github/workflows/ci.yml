@@ -20,11 +20,11 @@ jobs:
         uses: actions/checkout@v4
 
       # Étape 2: Configure l'environnement Java (JDK)
-      # La version 17 est requise par votre projet (spécifiée dans pom.xml)
-      - name: Set up JDK 17
+      # La version 21 est requise par votre projet (spécifiée dans pom.xml)
+      - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin' # Distribution Temurin (anciennement AdoptOpenJDK), un standard fiable
 
       # Étape 3: Met en cache les dépendances Maven
