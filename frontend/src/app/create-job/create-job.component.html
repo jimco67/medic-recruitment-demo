@@ -1,19 +1,19 @@
-<div class="create-job-container">
-  <h1 class="create-job-title">Create a New Job Offer</h1>
+<button mat-raised-button color="primary" class="open-close-button" (click)="openCloseForm()">{{ buttonText }}</button>
 
+<div *ngIf="showForm" class="popup">
   <form [formGroup]="jobForm" (ngSubmit)="submitForm()" class="job-form">
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Title</mat-label>
+    <mat-form-field appearance="fill">
+      <mat-label>Titre</mat-label>
       <input matInput formControlName="title" required data-testid="title-input">
     </mat-form-field>
 
-    <mat-form-field appearance="fill" class="full-width">
+    <mat-form-field appearance="fill">
       <mat-label>Description</mat-label>
       <textarea matInput formControlName="description" required data-testid="description-input"></textarea>
     </mat-form-field>
 
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Location</mat-label>
+    <mat-form-field appearance="fill">
+      <mat-label>Lieu</mat-label>
       <input matInput formControlName="location" [matAutocomplete]="auto" required data-testid="location-input">
       <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let city of citySuggestions$ | async" [value]="city">
@@ -22,13 +22,11 @@
       </mat-autocomplete>
     </mat-form-field>
 
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Specialty</mat-label>
+    <mat-form-field appearance="fill">
+      <mat-label>Spécialité</mat-label>
       <input matInput formControlName="speciality" required data-testid="speciality-input">
     </mat-form-field>
 
-    <button mat-raised-button color="primary" type="submit" [disabled]="jobForm.invalid" class="submit-button" data-testid="submit-button">
-      <mat-icon>save</mat-icon> Save Job Offer
-    </button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="jobForm.invalid" data-testid="submit-button">Valider</button>
   </form>
 </div>

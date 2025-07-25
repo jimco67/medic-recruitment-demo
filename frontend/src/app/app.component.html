@@ -1,25 +1,4 @@
-<!-- Modern header with application name and navigation -->
-<mat-toolbar class="app-toolbar">
-  <button mat-icon-button class="menu-button" (click)="sidenav.toggle()">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <span class="app-title">Medic Recruitment</span>
-  <span class="spacer"></span>
-  <button mat-button routerLink="/" class="nav-button">Job List</button>
-  <button mat-button routerLink="/create-job" class="nav-button" color="accent">Create Job</button>
-</mat-toolbar>
-
-<!-- Main content area with responsive navigation -->
-<mat-sidenav-container class="app-container">
-  <mat-sidenav mode="side" #sidenav>
-    <mat-nav-list>
-      <a mat-list-item routerLink="/">Job List</a>
-      <a mat-list-item routerLink="/create-job">Create Job</a>
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <div class="content">
-      <router-outlet></router-outlet>
-    </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<!-- Pour l'implémentation EventEmitter, supprimez la ligne <app-create-job> ci-dessous -->
+<!--<app-create-job></app-create-job>-->
+<app-job-list></app-job-list>
+<router-outlet></router-outlet>
