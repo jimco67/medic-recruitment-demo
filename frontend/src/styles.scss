@@ -1,5 +1,86 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global styles for the application */
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* Custom theme colors */
+$primary-color: #007acc;
+$secondary-color: #ff5722;
+$background-color: #f5f5f5;
+$text-color: #333;
+$accent-color: #ff9800;
+
+/* Global styles */
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Roboto', 'Helvetica Neue', sans-serif;
+  background-color: $background-color;
+  color: $text-color;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+mat-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: $primary-color;
+  color: white;
+}
+
+mat-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+mat-card:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+button {
+  text-transform: none;
+  font-weight: 500;
+  border-radius: 24px;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+button.mat-primary {
+  background-color: $primary-color;
+  color: white;
+}
+
+button.mat-accent {
+  background-color: $accent-color;
+  color: white;
+}
+
+a {
+  text-decoration: none;
+  color: $primary-color;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: darken($primary-color, 10%);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  button {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+}

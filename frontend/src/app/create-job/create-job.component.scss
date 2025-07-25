@@ -1,67 +1,80 @@
 :host {
   display: block;
   padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: 'Roboto', sans-serif;
 }
 
-.open-close-button {
-  margin-bottom: 20px;
+.create-job-container {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 0 auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(33, 41, 54, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  animation: fadeIn 0.3s ease-in-out;
+.create-job-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.create-job-title {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #007acc;
+  font-size: 2rem;
+  font-weight: 500;
 }
 
 .job-form {
-  background: #ffffff;
-  padding: 2.5rem;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  width: 90%;
-  max-width: 550px;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem; 
-  animation: slideInUp 0.4s ease-out;
+  gap: 1.5rem;
 }
 
-mat-form-field {
+.full-width {
   width: 100%;
 }
 
-button[type="submit"] {
-  margin-top: 1rem;
+.mat-form-field {
+  font-size: 1rem;
+}
+
+.submit-button {
   align-self: flex-end;
+  margin-top: 1rem;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 24px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.submit-button:hover {
+  transform: translateY(-2px);
+}
+
+.submit-button mat-icon {
+  font-size: 1.25rem;
 }
 
 @media (max-width: 600px) {
-  .job-form {
+  .create-job-container {
     padding: 1.5rem;
-    width: 95%;
   }
-}
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideInUp {
-  from {
-    transform: translateY(30px);
-    opacity: 0;
+  .create-job-title {
+    font-size: 1.75rem;
   }
-  to {
-    transform: translateY(0);
-    opacity: 1;
+
+  .submit-button {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.9rem;
   }
 }
