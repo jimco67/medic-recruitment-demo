@@ -1,7 +1,5 @@
-# Nom du workflow qui apparaîtra dans l'onglet "Actions" de GitHub
 name: Spring Boot CI
 
-# Déclenche le workflow à chaque push sur n'importe quelle branche
 on:
   push:
     branches: [ "**" ]
@@ -9,26 +7,22 @@ on:
     branches: [ "main", "master", "develop" ]
 
 jobs:
-  # Nom du job
   build-and-test:
-    # Utilise la dernière version d'Ubuntu comme environnement d'exécution
     runs-on: ubuntu-latest
 
     steps:
-      # Étape 1: Récupère le code source de votre dépôt
+      # Étape 1: Récupère le code source du dépôt
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Étape 2: Configure l'environnement Java (JDK)
-      # La version 21 est requise par votre projet (spécifiée dans pom.xml)
+      # Étape 2: Configure l'environnement Java
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           java-version: '21'
-          distribution: 'temurin' # Distribution Temurin (anciennement AdoptOpenJDK), un standard fiable
+          distribution: 'temurin'
 
       # Étape 3: Met en cache les dépendances Maven
-      # Cela accélère les builds en réutilisant les dépendances téléchargées
       - name: Cache Maven packages
         uses: actions/cache@v4
         with:
@@ -41,17 +35,13 @@ jobs:
       - name: Make Maven Wrapper executable
         run: chmod +x ./mvnw
 
-      # Vérifier que Docker fonctionne (optionnel mais recommandé pour debug)
+      # Vérifier que Docker fonctionne
       - name: Check Docker version
         run: docker version
-
-      # (Optionnel) Afficher les images Docker pour debug
-      - name: List Docker images
-        run: docker images
 
       # Lancer les tests (unitaires + Cucumber + Testcontainers)
       - name: Run tests with Maven (Cucumber & Testcontainers)
         env:
-          TESTCONTAINERS_RYUK_DISABLED: "true" # Optionnel, accélère parfois les builds CI
-          DOCKER_HOST: "unix:///var/run/docker.sock" # S'assure que Testcontainers trouve Docker
+          TESTCONTAINERS_RYUK_DISABLED: "true"
+          DOCKER_HOST: "unix:///var/run/docker.sock
         run: ./mvnw -B clean verify
