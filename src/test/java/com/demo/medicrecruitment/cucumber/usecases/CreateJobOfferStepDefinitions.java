@@ -76,11 +76,15 @@ public class CreateJobOfferStepDefinitions {
 
     @Then("the job offer shouldn't be created and returned {string} exception")
     public void theJobOfferShouldnTBeCreatedAndReturnedException(String exceptionName) {
-        switch(exceptionName) {
-            case "missing information" -> Assertions.assertThatThrownBy(() -> createJobOfferUseCase.handle(command, createJobEventProducer))
-                    .isInstanceOf(JobOfferMissingInformationException.class);
+        switch (exceptionName) {
+            case "missing information" ->
+                    Assertions.assertThatThrownBy(() -> createJobOfferUseCase.handle(command, createJobEventProducer))
+                            .isInstanceOf(JobOfferMissingInformationException.class);
+            case "hello test" ->
+                    Assertions.assertThatThrownBy(() -> createJobOfferUseCase.handle(command, createJobEventProducer))
+                            .isInstanceOf(Exception.class);
             default -> throw new IllegalArgumentException("Unknown exception: " + exceptionName);
+            //TODO one day we should refacto this
         }
-
     }
 }
