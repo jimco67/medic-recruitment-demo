@@ -1,6 +1,7 @@
 package com.demo.medicrecruitment.job.providers;
 
 import com.demo.medicrecruitment.job.domain.JobOfferDomain;
+import com.demo.medicrecruitment.job.exception.JobOfferMissingInformationException;
 import com.demo.medicrecruitment.job.infrastructure.JobOfferDomainRepository;
 import com.demo.medicrecruitment.job.mapper.domain.JobOfferDomainMapper;
 import com.demo.medicrecruitment.model.JobOffer;
@@ -31,5 +32,10 @@ class JpaJobOfferRepository implements JobOfferDomainRepository {
     @Override
     public List<JobOffer> getAll() {
         return jobOfferRepository.findAll();
+    }
+
+    @Override
+    public JobOffer getJob(Long jobId) {
+        return jobOfferRepository.findById(jobId).orElseThrow();
     }
 }

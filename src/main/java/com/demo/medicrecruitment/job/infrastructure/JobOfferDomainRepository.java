@@ -9,4 +9,6 @@ public interface JobOfferDomainRepository {
     JobOffer save(JobOfferDomain jobOfferDomain);
 
     List<JobOffer> getAll();
+
+    JobOffer getJob(Long jobId);
 }

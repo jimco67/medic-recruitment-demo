@@ -7,9 +7,11 @@ import com.demo.medicrecruitment.job.mapper.domain.JobOfferDomainMapper;
 import com.demo.medicrecruitment.job.mapper.domain.JobOfferMapper;
 import com.demo.medicrecruitment.job.usecase.CreateJobOfferUseCase;
 import com.demo.medicrecruitment.job.usecase.GetAllJobOfferUseCase;
+import com.demo.medicrecruitment.job.usecase.GetSpecificJobOfferUseCase;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +27,7 @@ public class JobOfferController {
 
     private final CreateJobOfferUseCase createJobOfferUseCase;
     private final GetAllJobOfferUseCase getAllJobOfferUseCase;
+    private final GetSpecificJobOfferUseCase getSpecificJobOfferUseCase;
     private final JobOfferDomainMapper jobOfferDomainMapper;
     private final JobOfferMapper jobOfferMapper;
     private final CreateJobEventProducer createJobEventProducer;
@@ -70,10 +73,10 @@ public class JobOfferController {
         return status(HttpStatus.OK).body(jobOfferMapper.toDTOList(jobOffersList));
     }
 
-//    @RequestMapping("/{jobOfferId}")
-//    public ResponseEntity<JobOfferDTO> getJobOffer(@PathVariable("jobOfferId") Long id) {
-//
-//        var jobOfferDomain = createJobOfferUseCase.handle(createJobOfferCommand);
-//        return status(HttpStatus.CREATED).body(jobOfferDomainMapper.toDTO(jobOfferDomain));
-//    }
+    @RequestMapping("/{jobOfferId}")
+    public ResponseEntity<JobOfferDTO> getJobOffer(@PathVariable("jobOfferId") Long id) {
+
+        var jobOfferDomain = getSpecificJobOfferUseCase.handle(id);
+        return status(HttpStatus.OK).body(jobOfferMapper.toDTO(jobOfferDomain));
+    }
 }
